@@ -1,5 +1,5 @@
 import numpy as np
-
+from docx import Document
 
 # ------------------------------
 # Helpers
@@ -26,8 +26,8 @@ def generate_answer(query, retrieved_chunks, chat_history, client):
     context = "\n\n".join([f"From {c['doc_name']}:\n{c['text']}" for c in retrieved_chunks])
 
     prompt = f"""You are a helpful assistant specialized in healthcare documents.
-Use only the provided context to answer. 
-If something is not in the context, say you don't know.
+Use only the provided context to answer.
+If something is not in the context, say you don't know. Handle medical terminology and abbreviations correctly.
 
 Conversation so far:
 {history_str}
