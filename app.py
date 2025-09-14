@@ -89,7 +89,7 @@ if uploaded_files:
                     chunks, embeddings = st.session_state.embeddings_cache[uploaded_file.name]
                 else:
                     chunks = chunk_text(extracted_text)
-                    embeddings = embed_text(chunks)
+                    embeddings = embed_text(chunks, client)
                     st.session_state.embeddings_cache[uploaded_file.name] = (chunks, embeddings)
 
                 # Store metadata
@@ -124,14 +124,14 @@ if query:
     elif st.session_state.faiss_index is not None:
         with st.spinner("Generating answer..."):
             # Embed query
-            query_vec = embed_text([query])[0].reshape(1, -1)
+            query_vec = embed_text([query], client)[0].reshape(1, -1)
 
             # Search FAISS
             D, I = st.session_state.faiss_index.search(query_vec, k=5)
             retrieved_chunks = [st.session_state.chunks_meta[i] for i in I[0]]
 
             # Generate answer using helper
-            answer = generate_answer(query, retrieved_chunks, st.session_state.chat_history)
+            answer = generate_answer(query, retrieved_chunks, st.session_state.chat_history, client)
 
             # Generate relevant excerpts (unique)
             sources_text = ""
@@ -139,7 +139,7 @@ if query:
             for c in retrieved_chunks:
                 if c['doc_name'] in seen_docs:
                     continue
-                relevant_part = extract_relevant_text(c['text'], query)
+                relevant_part = extract_relevant_text(c['text'], query, client)
                 if relevant_part.strip():
                     sources_text += f"📖 {c['doc_name']} — {relevant_part[:500]}...\n\n"
                     seen_docs.add(c['doc_name'])
