@@ -35,12 +35,12 @@ streamlit run app.py
 4. View **relevant excerpts** in the expandable section for each answer.
 
 ## Project Structure
-├── app.py # Main Streamlit app
-├── helper.py # Helper functions
-├── extracted/ # Extracted text files (not committed)
-├── requirements.txt # Python dependencies
-├── .gitignore # Ignore env files, pycache, etc.
-└── README.md
+- app.py # Main Streamlit app
+- helper.py # Helper functions
+- extracted/ # Extracted text files (not committed)
+- requirements.txt # Python dependencies
+- .gitignore # Ignore env files, etc.
+- README.md
 
 ## Notes
 - Use anonymized/test documents only; no real patient data.  
