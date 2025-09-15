@@ -109,7 +109,7 @@ if uploaded_files:
             index = faiss.IndexFlatL2(dim)
             index.add(embeddings_matrix)
             st.session_state.faiss_index = index
-            st.success("✅ All documents parsed, embedded, and stored in FAISS!")
+            # st.success("✅ All documents parsed, embedded, and stored in FAISS!")
 
 # --- Chat Interface ---
 st.subheader("💬 Chat with the Documents")
@@ -125,7 +125,6 @@ if query:
         with st.spinner("Generating answer..."):
             # Embed query
             query_vec = embed_text([query], client)[0].reshape(1, -1)
-
             # Search FAISS
             D, I = st.session_state.faiss_index.search(query_vec, k=5)
             retrieved_chunks = [st.session_state.chunks_meta[i] for i in I[0]]
