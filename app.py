@@ -28,7 +28,7 @@ parser = LlamaParse(result_type="markdown", api_key=LLAMAPARSE_API_KEY)
 # Streamlit UI
 # ------------------------------
 st.set_page_config(page_title="Healthcare Doc Chat", layout="wide")
-st.title("📑 Chat with Multiple Healthcare Documents (PDF, TXT, DOCX)")
+st.title("📑 Chat with Healthcare Documents")
 
 # --- Session State ---
 if "chat_history" not in st.session_state:
